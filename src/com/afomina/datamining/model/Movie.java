@@ -4,6 +4,7 @@ public class Movie {
 
     private String name;
     private Integer year;
+    private String info;
 
     public Movie() {}
 
@@ -30,5 +31,22 @@ public class Movie {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "name='" + name + '\'' +
+                ", year=" + year +
+                ", info='" + info + '\'' +
+                '}';
     }
 }
