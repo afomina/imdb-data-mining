@@ -11,8 +11,8 @@ import java.util.List;
  */
 public class App {
     public static void main(String[] args) throws IOException {
-        String path = "/home/alexandra/actresses.list";
-        List<Actor> actors = Parser.actressesParse(path);
+        String path = "/home/alexandra/Документы/actresses.list";
+        List<Actor> actors = Parser.actressesParse(path, 1990, 2014);
         for (Actor actor : actors) {
             System.out.println(actor);
         }
