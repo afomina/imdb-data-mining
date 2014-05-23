@@ -4,6 +4,7 @@ import com.afomina.datamining.model.Actor;
 import com.afomina.datamining.parser.Parser;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class AppForm {
     private JButton startButton;
     private JTextArea resultTextArea;
     private JPanel panel1;
+    private JButton openButton;
 
     public AppForm() {
         startButton.addActionListener(new ActionListener() {
@@ -42,10 +44,22 @@ public class AppForm {
             }
         });
         panel1.setVisible(true);
+        openButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                int chooseState = fileChooser.showOpenDialog(panel1);
+                if (chooseState == JFileChooser.APPROVE_OPTION) {
+                    filePath.setText(fileChooser.getSelectedFile().getPath());
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("AppForm");
+        frame.setMinimumSize(new Dimension(600, 400));
         frame.setContentPane(new AppForm().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
