@@ -27,6 +27,8 @@ public class AppForm {
             @Override
             public void actionPerformed(ActionEvent event) {
                 try {
+                    System.out.println("Starting parse " + filePath.getText());
+                    System.out.println("Years: " + yearBegin.getText() + " - " + yearEnd.getText());
                     List<Actor> actors = Parser.actressesParse(filePath.getText(), Integer.parseInt(yearBegin.getText()), Integer.parseInt(yearEnd.getText()));
                     int maxMovies = 0;
                     Actor maxMoviesActor = null;
@@ -37,7 +39,7 @@ public class AppForm {
                         }
                     }
                     System.out.println(maxMoviesActor);
-                    resultTextArea.setText(maxMoviesActor.toString());
+                    resultTextArea.setText(maxMoviesActor.getName());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
