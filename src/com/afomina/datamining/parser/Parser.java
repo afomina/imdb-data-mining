@@ -34,25 +34,27 @@ public class Parser {
         while (line != null) {
             Matcher matcher = actorPattern.matcher(line);
             if (matcher.matches()) {
-                String actorName = matcher.group(1);
+                String actorName = matcher.group(1).replaceAll("\t", "");
                 String filmName = matcher.group(2);
                 Integer filmYear = Integer.parseInt(matcher.group(3));
+                Actor actor = new Actor(actorName);
 
                 if (filmYear >= movieYearBegin && filmYear <= movieYearEnd) {
-                    Actor actor = new Actor(actorName);
                     actor.addMovie(new Movie(filmName, filmYear));
+                }
 
+                line = reader.readLine();
+                matcher = filmPattern.matcher(line);
+                while (line != null && matcher.matches()) {
+                    int year = Integer.parseInt(matcher.group(2));
+                    if (year >= movieYearBegin && year <= movieYearEnd) {
+                        actor.addMovie(new Movie(matcher.group(1), year));
+                    }
                     line = reader.readLine();
                     matcher = filmPattern.matcher(line);
-                    while (line != null && matcher.matches()) {
-                        int year = Integer.parseInt(matcher.group(2));
-                        if (year >= movieYearBegin && year <= movieYearEnd) {
-                            actor.addMovie(new Movie(matcher.group(1), year));
-                        }
-                        line = reader.readLine();
-                        matcher = filmPattern.matcher(line);
-                    }
+                }
 
+                if (actor.getMovies() != null) {
                     actors.add(actor);
                 }
             }
