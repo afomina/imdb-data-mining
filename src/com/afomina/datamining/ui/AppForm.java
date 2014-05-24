@@ -1,5 +1,6 @@
 package com.afomina.datamining.ui;
 
+import com.afomina.datamining.DataMiner;
 import com.afomina.datamining.model.Actor;
 import com.afomina.datamining.parser.Parser;
 
@@ -29,17 +30,23 @@ public class AppForm {
                 try {
                     System.out.println("Starting parse " + filePath.getText());
                     System.out.println("Years: " + yearBegin.getText() + " - " + yearEnd.getText());
-                    List<Actor> actors = Parser.actressesParse(filePath.getText(), Integer.parseInt(yearBegin.getText()), Integer.parseInt(yearEnd.getText()));
-                    int maxMovies = 0;
-                    Actor maxMoviesActor = null;
-                    for (Actor actor: actors) {
-                        if (actor.getMovies().size() > maxMovies) {
-                            maxMovies = actor.getMovies().size();
-                            maxMoviesActor = actor;
-                        }
+                    resultTextArea.setText("Please wait...");
+
+                    String path = filePath.getText();
+                    List<Actor> actors;
+                    boolean woman = false;
+                    if (path.contains("actresses")) {
+                        woman = true;
+                        System.out.println("Searching the most popular actress...");
+                        actors = Parser.actressesParse(path, Integer.parseInt(yearBegin.getText()), Integer.parseInt(yearEnd.getText()));
+                    } else {
+                        System.out.println("Searching the most popular actor...");
+                        actors = Parser.actorsParse(path, Integer.parseInt(yearBegin.getText()), Integer.parseInt(yearEnd.getText()));
                     }
+
+                    Actor maxMoviesActor = DataMiner.findTheMostPopularActor(actors);
                     System.out.println(maxMoviesActor);
-                    resultTextArea.setText(maxMoviesActor.getName());
+                    resultTextArea.setText("The most popular " + (woman? "actress": "actor") + " for given period is " + maxMoviesActor.getName() + "\nMovies: " + maxMoviesActor.getMovies().size());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

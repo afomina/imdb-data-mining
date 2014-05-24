@@ -14,20 +14,29 @@ import java.util.regex.Pattern;
  */
 public class Parser {
 
-    private static final int ACTRESSES_OFFSET = 241;
+    public static final int ACTRESSES_OFFSET = 241;
+    public static final int ACTORS_OFFSET = 239;
 
     public static List<Actor> actressesParse(String filePath, int movieYearBegin, int movieYearEnd) throws IOException {
+       return actressesParse(filePath, movieYearBegin, movieYearEnd, ACTRESSES_OFFSET);
+    }
+
+    public static List<Actor> actorsParse(String filePath, int movieYearBegin, int movieYearEnd)throws IOException {
+        return actressesParse(filePath, movieYearBegin, movieYearEnd, ACTORS_OFFSET);
+    }
+
+    public static List<Actor> actressesParse(String filePath, int movieYearBegin, int movieYearEnd, int offset) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath))));
 
         //skip offset
-        for (int i = 0; i < ACTRESSES_OFFSET; i++) {
+        for (int i = 0; i < offset; i++) {
             reader.readLine();
         }
 
         List<Actor> actors = new ArrayList<Actor>();
 
         //name film year {...} (...) [...] <...>
-        Pattern actorPattern = Pattern.compile("(.*)\t+(.*) \\(([0-9]{4})\\).*");
+        Pattern actorPattern = Pattern.compile("(\\S+)\t+(.*) \\(([0-9]{4})\\).*");
         Pattern filmPattern = Pattern.compile("\t+(.*) \\(([0-9]{4})\\) ?(\\{.*\\})? *(\\(.*\\))? *(\\[.*\\])? *(<.*>)?");
 
         String line = reader.readLine();
