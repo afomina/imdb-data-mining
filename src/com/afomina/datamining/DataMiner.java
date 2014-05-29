@@ -3,6 +3,7 @@ package com.afomina.datamining;
 import com.afomina.datamining.model.Actor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by alexandra
@@ -11,13 +12,15 @@ import java.util.List;
  */
 public class DataMiner {
 
-    public static Actor findTheMostPopularActor(List<Actor> actors) {
+    public static Actor findTheMostPopularActor(Map<Object, List<? extends Object>> graph) {
         int maxMovies = 0;
         Actor maxMoviesActor = null;
-        for (Actor actor: actors) {
-            if (actor.getMovies().size() > maxMovies) {
-                maxMovies = actor.getMovies().size();
-                maxMoviesActor = actor;
+        for (Object actor: graph.keySet()) {
+            if (actor instanceof Actor) {
+                if (graph.get(actor).size() > maxMovies) {
+                    maxMovies = graph.get(actor).size();
+                    maxMoviesActor = (Actor) actor;
+                }
             }
         }
         return maxMoviesActor;
