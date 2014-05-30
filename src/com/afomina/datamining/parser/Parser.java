@@ -36,7 +36,7 @@ public class Parser {
         }
 
         //name film year {...} (...) [...] <...>
-        Pattern actorPattern = Pattern.compile("(\\S+)\t+(.*) \\(([0-9]{4})\\).*");
+        Pattern actorPattern = Pattern.compile("(\\S.*)\t+(.*) \\(([0-9]{4})\\).*");
         Pattern filmPattern = Pattern.compile("\t+(.*) \\(([0-9]{4})\\) ?(\\{.*\\})? *(\\(.*\\))? *(\\[.*\\])? *(<.*>)?");
 
         Map<Object, List<? extends Object>> movieGraph = new HashMap<>();

@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by alexandra on 14.05.14.
@@ -33,7 +34,7 @@ public class AppForm {
                     resultTextArea.setText("Please wait...");
 
                     String path = filePath.getText();
-                    List<Actor> actors;
+                    Map<Object, List<? extends Object>> actors;
                     boolean woman = false;
                     if (path.contains("actresses")) {
                         woman = true;
@@ -46,7 +47,7 @@ public class AppForm {
 
                     Actor maxMoviesActor = DataMiner.findTheMostPopularActor(actors);
                     System.out.println(maxMoviesActor);
-                    resultTextArea.setText("The most popular " + (woman? "actress": "actor") + " for given period is " + maxMoviesActor.getName() + "\nMovies: " + maxMoviesActor.getMovies().size());
+                    resultTextArea.setText("The most popular " + (woman? "actress": "actor") + " for given period is " + maxMoviesActor.getName() + "\nMovies: " + actors.get(maxMoviesActor).size());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
