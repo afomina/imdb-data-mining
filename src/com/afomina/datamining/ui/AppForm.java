@@ -2,6 +2,8 @@ package com.afomina.datamining.ui;
 
 import com.afomina.datamining.DataMiner;
 import com.afomina.datamining.model.Actor;
+import com.afomina.datamining.model.Base;
+import com.afomina.datamining.model.Movie;
 import com.afomina.datamining.parser.Parser;
 
 import javax.swing.*;
@@ -34,7 +36,7 @@ public class AppForm {
                     resultTextArea.setText("Please wait...");
 
                     String path = filePath.getText();
-                    Map<Object, List<? extends Object>> actors;
+                    Map<Base, List<Base>> actors;
                     boolean woman = false;
                     if (path.contains("actresses")) {
                         woman = true;
@@ -46,8 +48,11 @@ public class AppForm {
                     }
 
                     Actor maxMoviesActor = DataMiner.findTheMostPopularActor(actors);
-                    System.out.println(maxMoviesActor);
-                    resultTextArea.setText("The most popular " + (woman? "actress": "actor") + " for given period is " + maxMoviesActor.getName() + "\nMovies: " + actors.get(maxMoviesActor).size());
+                    System.out.println("Actor: " + maxMoviesActor);
+                    Movie movie = DataMiner.findTheMostPopularMovie(actors);
+                    System.out.println("Movie: " + movie);
+                    resultTextArea.setText("The most popular " + (woman ? "actress" : "actor") + " for given period is " + maxMoviesActor.getName() + ", amount of movies: " + actors.get(maxMoviesActor).size()
+                            + "\nThe most popular movie is '" + movie.getName() + "', " + movie.getYear() + ", amount of actors: " + actors.get(movie).size());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

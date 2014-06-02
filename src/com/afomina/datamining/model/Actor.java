@@ -1,6 +1,6 @@
 package com.afomina.datamining.model;
 
-public class Actor {
+public class Actor implements Base {
 
     private String name;
 
